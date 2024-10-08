@@ -5,7 +5,6 @@ import time
 from datetime import datetime, timedelta
 import pytz
 import requests
-
 # Define functions to send messages via Telegram
 def telegram_bot_sendques(bot_message):
     bot_token = '6283203048:AAGgOl-o6Itm3D1mw4_Omcf-g4t260vixN8'
