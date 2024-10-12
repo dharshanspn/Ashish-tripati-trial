@@ -24,9 +24,9 @@ def telegram_bot_sendtext(bot_message):
     return response.json()
 
 #variables
-sub = "Ramu"
-username = "nrama1219@gmail.com"
-password = "Nrama@89"
+sub = "in Ravi"
+username = "shahbulbul231@gmail.com"
+password = "Basit@567"
 login_text= f" Logged {sub}"
 limit_texts = f"Limit hit {sub}"
 flag = True
@@ -63,6 +63,7 @@ while flag:
         telegram_bot_sendtext(f"Password {sub}")
 
 telegram_bot_sendques(login_text)
+telegram_bot_sendtext(login_text)
 
 # Navigate to the authoring page
 driver.get("https://expert.chegg.com/qna/authoring/answer")
@@ -101,6 +102,7 @@ while True:
             
             if i <= 1:
                 telegram_bot_sendques(i)
+                telegram_bot_sendtext(i)
             elif i % 1000 == 0:
                 status = f"UP Running...  {i/10} {sub}"
                 telegram_bot_sendtext(status)
