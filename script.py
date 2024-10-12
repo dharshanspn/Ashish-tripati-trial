@@ -61,8 +61,6 @@ while flag:
     except Exception as e:
 
         telegram_bot_sendtext(f"Password {sub}")
-
-telegram_bot_sendques(login_text)
 telegram_bot_sendtext(login_text)
 
 # Navigate to the authoring page
@@ -101,7 +99,6 @@ while True:
             driver.refresh()
             
             if i <= 1:
-                telegram_bot_sendques(i)
                 telegram_bot_sendtext(i)
             elif i % 1000 == 0:
                 status = f"UP Running...  {i/10} {sub}"
