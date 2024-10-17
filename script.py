@@ -5,15 +5,6 @@ import time
 from datetime import datetime, timedelta
 import pytz
 import requests
-
-# Ravi0504bot
-def telegram_bot_sendques(bot_message):
-    bot_token = '7618548128:AAFOCgpJJoJHmSFfPsEmLxXcnUp9fM8xy-k'
-    bot_chatID = '5715948034'
-    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + \
-                '&parse_mode=MarkdownV2&text=' + str(bot_message).replace('.', '\\.')  # Escape the dot character
-    response = requests.get(send_text)
-    return response.json()
 #Statusbot
 def telegram_bot_sendtext(bot_message):
     bot_token = '7689900582:AAEqvL6FpyCoALd6iOvwGneRJvbrQlYrWvw'
@@ -23,14 +14,23 @@ def telegram_bot_sendtext(bot_message):
     response = requests.get(send_text)
     return response.json()
 
+#Notifier
+def telegram_bot_sendques (bot_message):
+    bot_token = '8131045025:AAE9_BMb5i2pk479mubtilbSIUilPA25jWM'
+    bot_chatID = '2055974114'
+    send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + \
+                '&parse_mode=MarkdownV2&text=' + str(bot_message).replace('.', '\\.')  # Escape the dot character
+    response = requests.get(send_text)
+    return response.json()
+
 #variables
-sub = "in Ravi"
-username = "shahbulbul231@gmail.com"
-password = "Basit@567"
-login_text= f" Logged {sub}"
+sub = "Ithika ID"
+username = "itika.singh@triviumservice.com"
+password = "Cik-1604-24@021"
+login_text= f"{sub} Logged in"
 limit_texts = f"Limit hit {sub}"
 flag = True
-alert = "Question found"
+alert = f"Question available on {sub}"
 while flag:
     try:
         # Set up the Chrome WebDriver
@@ -39,21 +39,21 @@ while flag:
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(options=options)
-        
+
         # Open the Chegg website and log in
         driver.get("https://expert.chegg.com/auth")
         time.sleep(3)
-        
+
         #print(driver.find_element(By.XPATH, "/html/body").text)
-        
+
         # Username
-        element = driver.find_element(By.XPATH, "/html/body/div[1]/main/div[3]/div/form/div[1]/div[2]/div/div/input")  # Replace with the correct XPath
+        element = driver.find_element(By.XPATH, "/html/body/div/main/section/div/div/div/form/div[1]/div/div[1]/div/input")  # Replace with the correct XPath
         element.send_keys(username)
-        element.send_keys(Keys.ENTER)
+        #element.send_keys(Keys.ENTER)
         time.sleep(3)
-        
+
         # Password
-        passw = driver.find_element(By.XPATH, "/html/body/div[1]/main/div[3]/div/form/div[1]/div[2]/div[2]/div/div/input")  # Replace with the correct XPath
+        passw = driver.find_element(By.XPATH, "/html/body/div/main/section/div/div/div/form/div[1]/div/div[2]/div/input")  # Replace with the correct XPath
         passw.send_keys(password)
         passw.send_keys(Keys.ENTER)
         time.sleep(3)
@@ -61,7 +61,9 @@ while flag:
     except Exception as e:
 
         telegram_bot_sendtext(f"Password {sub}")
+
 telegram_bot_sendtext(login_text)
+
 
 # Navigate to the authoring page
 driver.get("https://expert.chegg.com/qna/authoring/answer")
@@ -76,19 +78,37 @@ while True:
         limit_text = f"{limit}"
 
         if limit_text != "https://expert.chegg.com/qna/authoring/answer":
-           # Define the time zone (UTC+5:30)
-           tz = pytz.timezone('Asia/Kolkata')
-           # Get the current time in UTC+5:30
-           now = datetime.now(tz)
-           # Define the target time (12:30 PM)
-           target_time = now.replace(hour=12, minute=30, second=0, microsecond=0)
-           # If the current time is already past 12:30 PM, set the target time to the next day
-           if now > target_time:
-               target_time += timedelta(days=1)
-           # Calculate the difference in seconds
-           n = (target_time - now).total_seconds()
-           telegram_bot_sendtext(limit_texts)
-           time.sleep(n)
+            time.sleep(3)
+            driver.get("https://expert.chegg.com/qna/authoring/answer")
+            time.sleep(3)
+            limit = driver.current_url
+            limit_text = f"{limit}"
+            if limit_text != "https://expert.chegg.com/qna/authoring/answer":
+                time.sleep(3)
+                driver.get("https://expert.chegg.com/qna/authoring/answer")
+                time.sleep(3)
+                limit = driver.current_url
+                limit_text = f"{limit}"
+                if limit_text != "https://expert.chegg.com/qna/authoring/answer":
+                    time.sleep(3)
+                    driver.get("https://expert.chegg.com/qna/authoring/answer")
+                    time.sleep(3)
+                    limit = driver.current_url
+                    limit_text = f"{limit}"
+
+                    # Define the time zone (UTC+5:30)
+                    tz = pytz.timezone('Asia/Kolkata')
+                    # Get the current time in UTC+5:30
+                    now = datetime.now(tz)
+                    # Define the target time (12:30 PM)
+                    target_time = now.replace(hour=12, minute=30, second=0, microsecond=0)
+                    # If the current time is already past 12:30 PM, set the target time to the next day
+                    if now > target_time:
+                        target_time += timedelta(days=1)
+                    # Calculate the difference in seconds
+                    n = (target_time - now).total_seconds()
+                    telegram_bot_sendtext(limit_texts)
+                    time.sleep(n)
 
         driver.get("https://expert.chegg.com/qna/authoring/answer")
         time.sleep(5)
@@ -107,6 +127,7 @@ while True:
             
         else:
             telegram_bot_sendques(f"{alert}")
+            telegram_bot_sendtext(f"{alert}")
             time.sleep(720)
 
     except Exception as e:
