@@ -17,16 +17,16 @@ def telegram_bot_sendtext(bot_message):
 #Notifier
 def telegram_bot_sendques (bot_message):
     bot_token = '8131045025:AAE9_BMb5i2pk479mubtilbSIUilPA25jWM'
-    bot_chatID = '2055974114'
+    bot_chatID = '1827930375'
     send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + \
                 '&parse_mode=MarkdownV2&text=' + str(bot_message).replace('.', '\\.')  # Escape the dot character
     response = requests.get(send_text)
     return response.json()
 
 #variables
-sub = "Ithika ID"
-username = "itika.singh@triviumservice.com"
-password = "Cik-1604-24@021"
+sub = " - "
+username = "itsravi.r1009@gmail.com"
+password = "Ravi1234@"
 login_text= f"{sub} Logged in"
 limit_texts = f"Limit hit {sub}"
 flag = True
